@@ -1,4 +1,6 @@
 <x-layout>
+    <x-breadcrumbs class="mb-4"
+                   :links="['Jobs' =>'#']" />
    @foreach($jobs as $job)
        <x-job-card class="mb-2" :job="$job">
            <div class="mt-2">
