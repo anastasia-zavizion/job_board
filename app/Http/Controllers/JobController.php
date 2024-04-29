@@ -10,9 +10,10 @@ class JobController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('jobs.index', ['jobs'=>Job::all()]);
+        $jobs = Job::filter($request->only(['search','min_salary','max_salary','experience','category']));
+        return view('jobs.index', ['jobs' => $jobs->get()]);
     }
 
     /**

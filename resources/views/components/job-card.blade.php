@@ -13,12 +13,10 @@
         </div>
 
         <div class="flex gap-2">
-            <x-tag>{{ucfirst($job->experience)}}</x-tag>
-            <x-tag>{{$job->category}}</x-tag>
+            <x-tag><a href="{{route('jobs.index',[...request()->all(),'experience'=>$job->experience])}}">{{ucfirst($job->experience)}}</a> </x-tag>
+            <x-tag><a href="{{route('jobs.index',[...request()->all(),'category'=>$job->category])}}">{{ucfirst($job->category)}}</a></x-tag>
         </div>
     </div>
-
-    <p class="text-sm text-slate-500">{{nl2br($job->description)}}</p>
 
     {{$slot}}
 </x-card>
