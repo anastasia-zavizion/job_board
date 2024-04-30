@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\JobApplication;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Job extends Model
 {
@@ -53,9 +55,15 @@ class Job extends Model
         })->when($filters['category']  ?? null, function ($query,$value) {
             $query->where('category', $value);
         });
+    }
 
+    public function jobApplications():HasMany
+    {
+        return $this->hasMany(JobApplication::class);
+    }
 
-
+    public function hasUserApplied(User $user){
+       return $this->where('id', $this->id)->whereHas('jobApplications',fn($query)=> $query->where('user_id',$user->id))->exists();
     }
 
 }

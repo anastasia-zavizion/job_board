@@ -34,11 +34,19 @@
             </li>
         @else
             <li>
-                <a href="{{ route('auth.create') }}">Sign in</a>
+                <a href="{{ route('login') }}">Sign in</a>
             </li>
         @endauth
     </ul>
 </nav>
+
+
+@if(session('success'))
+<div class="my-8 rounded-md bg-green-500 p-4 text-white opacity-75">
+    {{session('success')}}
+</div>
+@endif
+
 {{$slot}}
 </body>
 </html>
