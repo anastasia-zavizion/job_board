@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Employer;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,6 +14,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        User::factory(100)->create();
+
+        $users = User::all()->shuffle();
+
+        for ($i=0;$i<20;$i++){
+            Employer::factory()->create(['user_id'=>$users->pop()->id]);
+        }
+
         $this->call([JobSeeder::class]);
         // \App\Models\User::factory(10)->create();
 

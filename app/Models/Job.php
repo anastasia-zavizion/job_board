@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Job extends Model
 {
@@ -15,13 +16,33 @@ class Job extends Model
     public static array $category = ['IT','Marketing','Sales','QA'];
 
     protected $fillable = ['title','description','salary','location','category'];
+    protected $appends = ['salary_formatted'];
+
+    protected function salaryFormatted(): Attribute //accessor
+    {
+        return Attribute::make(
+            get: fn () => '$ '.number_format($this->salary)
+        );
+    }
+
+
+    public function employer() : BelongsTo
+    {
+        return $this->belongsTo(Employer::class);
+
+    }
+
 
     public function scopeFilter(Builder| QueryBuilder $query,array $filters) : Builder| QueryBuilder{
 
-        return $query->when($filters['search'] ?? null, function ($query) use ($filters) {
-            $query->where(function ($query) use ($filters){
-                $query->where('title', 'like', '%' . $filters['search'] . '%')
-                    ->orWhere('description', 'like', '%' . $filters['search'] . '%');
+        return $query->when($filters['search'] ?? null, function ($query,$value) {
+            $query->where(function ($query) use ($value){
+                $query->where('title', 'like', '%' . $value . '%')
+                    ->orWhere('description', 'like', '%' . $value . '%')
+                    ->orWhereHas('employer', function ($query) use ($value){
+                        $query->where('company_name','LIKE','%' . $value . '%');
+                    })
+                ;
             });
         })->when($filters['min_salary']  ?? null, function ($query, $value){
             $query->where('salary', '>=', $value);

@@ -3,12 +3,12 @@
         <h2 class="text-lg font-medium">
             {{$job->title}}
         </h2>
-        <div class="text-slate-500">$ {{number_format($job->salary)}}</div>
+        <div class="text-slate-500">{{$job->salary_formatted}}</div>
     </div>
 
     <div class="mb-4 flex justify-between text-sm text-slate-500 items-center">
         <div class="flex gap-2">
-            <div>Company name</div>
+            <div>{{$job->employer->company_name}}</div>
             <div>{{$job->location}}</div>
         </div>
 
