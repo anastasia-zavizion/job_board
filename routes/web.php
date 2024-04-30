@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,3 +18,7 @@ Route::get('/', function () {
 });
 
 Route::resource('jobs',\App\Http\Controllers\JobController::class);
+
+Route::get('login',[AuthController::class,'create'])->name('auth.create');
+Route::post('login',[AuthController::class,'store'])->name('auth.store');;
+Route::delete('logout',[AuthController::class,'destroy'])->name('auth.destroy');;
