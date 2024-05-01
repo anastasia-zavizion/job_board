@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Job;
@@ -13,12 +14,20 @@ class JobApplication extends Model
     use HasFactory;
 
     protected $fillable = ['expected_salary', 'user_id','job_id'];
+    protected $appends = ['expected_salary_formatted'];
 
     public function job():BelongsTo{
-        $this->belongsTo(Job::class);
+       return $this->belongsTo(Job::class);
     }
 
     public function user():BelongsTo{
-        $this->belongsTo(User::class);
+        return  $this->belongsTo(User::class);
+    }
+
+    protected function expectedSalaryFormatted(): Attribute //accessor
+    {
+        return Attribute::make(
+            get: fn () => '$ '.number_format($this->expected_salary)
+        );
     }
 }

@@ -27,13 +27,11 @@ class Job extends Model
         );
     }
 
-
     public function employer() : BelongsTo
     {
         return $this->belongsTo(Employer::class);
 
     }
-
 
     public function scopeFilter(Builder| QueryBuilder $query,array $filters) : Builder| QueryBuilder{
 
