@@ -25,6 +25,16 @@
             <li>
                 <a href="{{route('my-job-applications.index')}}">{{ auth()->user()->name ?? 'Anynomus' }} : Applications</a>
             </li>
+
+            <li>
+                <a href="{{route('my-jobs.index')}}">My jobs</a>
+            </li>
+
+            @can('create',App\Models\Employer::class)
+                <li>
+                    <a href="{{route('employer.create')}}">Register an employer</a>
+                </li>
+            @endcan
             <li>
                 <form action="{{ route('auth.destroy') }}" method="POST">
                     @csrf
