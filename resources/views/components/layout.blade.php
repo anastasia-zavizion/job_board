@@ -47,6 +47,12 @@
 </div>
 @endif
 
+@if(session('error'))
+    <div class="my-8 rounded-md bg-red-500 p-4 text-white opacity-75">
+        {{session('error')}}
+    </div>
+@endif
+
 {{$slot}}
 </body>
 </html>

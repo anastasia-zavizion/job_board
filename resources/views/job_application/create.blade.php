@@ -8,32 +8,22 @@
 
     <x-card>
         <h2 class="font-medium mb-4">Your Job Application</h2>
-
         <form enctype="multipart/form-data" method="POST" action="{{route('job.application.store',$job)}}">
             @csrf
             <div class="mb-4">
-                <label for="expected_salary" class="mb-2 block text-sm font-medium text-slate-900">
-                    Expected salary
-                </label>
+                <x-label :required="true"  for="expected_salary" text="Expected salary"/>
                 <x-text-input type="number" name="expected_salary"/>
             </div>
-
             <div class="mb-4">
-                <label for="cv" class="mb-2 block text-sm font-medium text-slate-900">
-                    Your CV file
-                </label>
+                <x-label :required="true" for="cv" text="Your CV file"/>
                 <x-text-input type="file" name="cv"/>
             </div>
-
-
             <div>
                 <x-button type="submit">Apply</x-button>
             </div>
-
             @foreach($errors->all() as $error)
                 <li>{{$error}}</li>
             @endforeach
-
         </form>
     </x-card>
 </x-card>
