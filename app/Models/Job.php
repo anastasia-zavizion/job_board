@@ -17,8 +17,16 @@ class Job extends Model
     public static array $experience = ['entry','intermediate', 'senior'];
     public static array $category = ['IT','Marketing','Sales','QA'];
 
-    protected $fillable = ['title','description','salary','location','category'];
     protected $appends = ['salary_formatted'];
+
+    protected $fillable = [
+        'title',
+        'location',
+        'salary',
+        'description',
+        'experience',
+        'category'
+    ];
 
     protected function salaryFormatted(): Attribute //accessor
     {
