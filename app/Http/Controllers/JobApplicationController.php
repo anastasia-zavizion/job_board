@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class JobApplicationController extends Controller
 {
@@ -29,11 +30,18 @@ class JobApplicationController extends Controller
      */
     public function store(Job $job, Request $request)
     {
-        $validated = $request->validate(['expected_salary'=>'required|numeric|min:100|max:12000']);
+        $validated = $request->validate([
+            'expected_salary'=>'required|numeric|min:100|max:12000',
+            'cv'=>'required|file|mimes:pdf|max:2048',
+        ]);
+
+        $file = $request->file('cv');
+        $path = $file->store('cvs','private');
 
         $job->jobApplications()->create([
             ...$validated,
-            'user_id'=>$request->user()->id
+            'user_id'=>$request->user()->id,
+            'cv_path'=>$path,
         ]);
 
         return redirect()->route('jobs.show',$job)->with('success','Job application submitted');
