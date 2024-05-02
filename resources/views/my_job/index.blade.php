@@ -1,10 +1,11 @@
 <x-layout>
     <x-breadcrumbs class="mb-4" :links="['My Jobs'=>'#']"/>
     <x-card>
+        @can('create','App\Models\Job')
         <div class="text-right mb-8">
             <x-link-button :href="route('my-jobs.create')">Add new</x-link-button>
         </div>
-
+        @endcan
         @forelse($jobs as $job)
             <x-job-card :$job>
                 <div class="text-xs text-slate-500">
