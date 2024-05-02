@@ -1,4 +1,4 @@
-<x-card class="mb-2">
+<x-card @class(['mb-2', 'opacity-80'=>$job->deleted_at])>
     <div class="flex justify-between">
         <h2 class="text-lg font-medium">
             {{$job->title}}
