@@ -20,6 +20,10 @@
                     @empty
                         <div>No applications yet</div>
                     @endforelse
+
+                    <div class="flex gap-2 mt-2">
+                        <x-link-button :href="route('my-jobs.edit', $job->id)">Edit</x-link-button>
+                    </div>
                 </div>
             </x-job-card>
 

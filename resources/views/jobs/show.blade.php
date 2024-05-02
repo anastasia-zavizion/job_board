@@ -4,7 +4,7 @@
                    :links="['Jobs' => route('jobs.index'), $job->title => '#']" />
 
     <x-job-card class="mb-2" :job="$job">
-        <p class="text-sm text-slate-500 mb-2">{{nl2br($job->description)}}</p>
+        <p class="text-sm text-slate-500 mb-2">{!! nl2br(e($job->description)) !!}</p>
 
         @can('apply',$job)
         <x-link-button :href="route('job.application.create',$job)">
